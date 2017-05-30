@@ -15,7 +15,7 @@ def genSize(d,size):
 	elif d == 'G':
 		filesize = 1 * 1024 * 1024 * 1024 * size
 	else : 
-		filesize = size
+		filesize = 1024 * size
 	
 
 
@@ -24,21 +24,20 @@ def textGen():
 	ds = 0
 	f = open("../vocabulary",'r')
 	buffer = f.read()
+	f.close()
+
 	# print buffer
 
 	count = int(buffer.split("\n")[0])
 	words_ = buffer.split("\n")[1].split(',')
+
 	for i,word in enumerate(words_):
 		words_[i] = word.strip()
-	# r = []
-	# for j in range(1000):
-	# 	r.append(int(random.random()*count))
-
-	f.close()
-	with open("../text1.txt",'w') as fout :
+	print outpath
+	with open(outpath,'w') as fout :
 
 		index = 1;
-		print filesize
+		#print filesize
 		while ds < filesize:
 			item = int(random.random() * count)
 			str = words_[item]
@@ -48,18 +47,26 @@ def textGen():
 				fout.write('\n')
 			index += 1 
 			ds = os.path.getsize(outpath)
-			
+			# print ds
 		fout.close()
-	
+		print filepath
+		print outpath
 	
 
 if __name__ == "__main__":
 
 	s = "   hello"
-	scala = sys.argv[1]
-	size = int(sys.argv[2])
+	
+	scala = ''
+	size = 0
+	
+	if(len(sys.argv) == 3):
+		scala = sys.argv[1]
+		size = int(sys.argv[2])
+	if(len(sys.argv) == 2):
+		size = int(sys.argv[1])
 	filepath = '../vocabulary'
-	outpath = '../text1.txt'
-	genSize(scala,size)
+	outpath = '../data/text1.txt'
 
+	genSize(scala,size)
 	textGen()
